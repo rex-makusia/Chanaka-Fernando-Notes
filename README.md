@@ -787,6 +787,540 @@ Next Steps: [How to proceed]
 
 ```mermaid
 graph TD
+    QA[Quality Attributes Analysis] --> P[Performance Required?]
+    QA --> S[Scalability Needed?]
+    QA --> R[Reliability Critical?]
+    QA --> SEC[Security Important?]
+    QA --> M[Maintainability Priority?]
+    
+    P -->|High| P1[Caching Patterns<br/>CDN<br/>Load Balancing]
+    P -->|Medium| P2[Optimized Queries<br/>Connection Pooling]
+    P -->|Low| P3[Standard Patterns OK]
+    
+    S -->|High| S1[Microservices<br/>Auto-scaling<br/>Load Distribution]
+    S -->|Medium| S2[Horizontal Scaling<br/>Stateless Design]
+    S -->|Low| S3[Monolithic OK<br/>Vertical Scaling]
+    
+    R -->|High| R1[Circuit Breaker<br/>Redundancy<br/>Failover]
+    R -->|Medium| R2[Retry Mechanisms<br/>Health Checks]
+    R -->|Low| R3[Basic Error Handling]
+    
+    SEC -->|High| SEC1[Zero Trust<br/>Multi-factor Auth<br/>Encryption]
+    SEC -->|Medium| SEC2[Standard Auth<br/>HTTPS/TLS]
+    SEC -->|Low| SEC3[Basic Security]
+    
+    M -->|High| M1[Modular Design<br/>Clean Architecture<br/>DDD]
+    M -->|Medium| M2[Layered Architecture<br/>Separation of Concerns]
+    M -->|Low| M3[Simple Structure]
+    
+    style QA fill:#ffcdd2
+    style P1 fill:#c8e6c9
+    style S1 fill:#c8e6c9
+    style R1 fill:#c8e6c9
+    style SEC1 fill:#c8e6c9
+    style M1 fill:#c8e6c9
+```
+
+#### **Microservices Architecture Pattern**
+
+**From Monolith to Microservices Evolution:**
+
+```mermaid
+graph TB
+    subgraph "Monolithic Architecture"
+        M[Single Application
+        - All features in one codebase
+        - Shared database
+        - Single deployment unit]
+    end
+    
+    subgraph "Service-Oriented Architecture (SOA)"
+        S1[Service A]
+        S2[Service B] 
+        S3[Service C]
+        ESB[Enterprise Service Bus]
+        
+        S1 <--> ESB
+        S2 <--> ESB
+        S3 <--> ESB
+    end
+    
+    subgraph "Microservices Architecture"
+        MS1[User Service<br/>Database A]
+        MS2[Order Service<br/>Database B]
+        MS3[Payment Service<br/>Database C]
+        MS4[Notification Service<br/>Database D]
+        
+        AG[API Gateway]
+        SM[Service Mesh]
+        
+        AG --> MS1
+        AG --> MS2
+        AG --> MS3
+        AG --> MS4
+        
+        MS1 <-.-> SM
+        MS2 <-.-> SM
+        MS3 <-.-> SM
+        MS4 <-.-> SM
+    end
+    
+    M -->|Decompose| S1
+    S1 -->|Further Break Down| MS1
+    
+    style M fill:#ffcdd2
+    style ESB fill:#fff3e0
+    style AG fill:#e1f5fe
+    style SM fill:#e8f5e8
+```
+
+#### **Integration Patterns Comparison**
+
+**Enterprise Integration Pattern Selection:**
+
+```mermaid
+flowchart TD
+    INT[Integration Need] --> Q1{Number of Systems?}
+    
+    Q1 -->|2-3 Systems| PTP[Point-to-Point Integration
+    ✅ Simple implementation
+    ✅ Fast development
+    ❌ Becomes complex with scale
+    ❌ Tight coupling]
+    
+    Q1 -->|4-10 Systems| HUB[Hub-and-Spoke with ESB
+    ✅ Central management
+    ✅ Reusable services
+    ❌ Single point of failure
+    ❌ Performance bottleneck]
+    
+    Q1 -->|10+ Systems| MESH[Service Mesh Architecture
+    ✅ Decentralized
+    ✅ Scalable
+    ✅ Resilient
+    ❌ Complex setup
+    ❌ Requires expertise]
+    
+    PTP --> IMPL1[REST APIs<br/>Direct DB connections<br/>File transfers]
+    HUB --> IMPL2[Enterprise Service Bus<br/>Message queues<br/>Transformation engine]
+    MESH --> IMPL3[API Gateway<br/>Service discovery<br/>Circuit breakers]
+    
+    style INT fill:#ffcdd2
+    style PTP fill:#e8f5e8
+    style HUB fill:#fff3e0
+    style MESH fill:#e1f5fe
+```
+
+#### **Security Architecture Patterns**
+
+**Zero Trust Architecture Implementation:**
+
+```mermaid
+graph TB
+    subgraph "Traditional Perimeter Security"
+        FW[Firewall] --> DMZ[DMZ]
+        DMZ --> INT[Internal Network]
+        INT --> APP[Applications]
+    end
+    
+    subgraph "Zero Trust Architecture"
+        USER[User] --> MFA[Multi-Factor Authentication]
+        MFA --> VERIFY[Identity Verification]
+        VERIFY --> AUTHZ[Authorization Check]
+        AUTHZ --> ENCRYPT[Encrypted Connection]
+        ENCRYPT --> APP2[Application]
+        
+        MONITOR[Continuous Monitoring] -.-> USER
+        MONITOR -.-> MFA
+        MONITOR -.-> VERIFY
+        MONITOR -.-> AUTHZ
+        MONITOR -.-> ENCRYPT
+        MONITOR -.-> APP2
+    end
+    
+    subgraph "Security Principles"
+        P1[Never Trust<br/>Always Verify]
+        P2[Least Privilege<br/>Access]
+        P3[Assume Breach<br/>Mindset]
+    end
+    
+    style FW fill:#ffcdd2
+    style MFA fill:#c8e6c9
+    style VERIFY fill:#c8e6c9
+    style AUTHZ fill:#c8e6c9
+    style MONITOR fill:#e1f5fe
+```
+
+#### **Cloud Architecture Evolution**
+
+**Cloud Migration Patterns:**
+
+```mermaid
+graph LR
+    subgraph "On-Premises"
+        OP[Traditional Infrastructure
+        - Physical servers
+        - Fixed capacity
+        - Manual scaling
+        - High maintenance]
+    end
+    
+    subgraph "Infrastructure as Code"
+        IAC[IaC Deployment
+        - Automated provisioning
+        - Version controlled
+        - Repeatable deployments
+        - Infrastructure as code]
+    end
+    
+    subgraph "Container Orchestration"
+        CONT[Containerized Applications
+        - Docker containers
+        - Kubernetes orchestration
+        - Auto-scaling
+        - Service mesh]
+    end
+    
+    subgraph "Serverless"
+        SL[Function as a Service
+        - Event-driven
+        - Pay-per-execution
+        - Auto-scaling
+        - Managed infrastructure]
+    end
+    
+    OP -->|Lift & Shift| IAC
+    IAC -->|Containerize| CONT
+    CONT -->|Function Decomposition| SL
+    
+    style OP fill:#ffcdd2
+    style IAC fill:#fff3e0
+    style CONT fill:#e8f5e8
+    style SL fill:#e1f5fe
+```
+
+#### **Data Architecture Patterns**
+
+**Modern Data Architecture Evolution:**
+
+```mermaid
+graph TD
+    subgraph "Data Sources"
+        DB[Operational Databases]
+        API[APIs]
+        FILE[Files & Logs]
+        STREAM[Real-time Streams]
+    end
+    
+    subgraph "Data Lake Architecture"
+        INGEST[Data Ingestion Layer]
+        STORE[Data Storage Layer
+        - Raw Data Zone
+        - Processed Data Zone
+        - Curated Data Zone]
+        PROCESS[Data Processing Layer
+        - Batch Processing
+        - Stream Processing
+        - ML Pipelines]
+    end
+    
+    subgraph "Data Mesh Architecture"
+        DOMAIN1[Sales Domain
+        Data Products]
+        DOMAIN2[Marketing Domain
+        Data Products]
+        DOMAIN3[Operations Domain
+        Data Products]
+        
+        PLATFORM[Data Platform
+        Self-serve Infrastructure]
+    end
+    
+    subgraph "Consumption"
+        BI[Business Intelligence]
+        ML[Machine Learning]
+        APP[Applications]
+        DASH[Dashboards]
+    end
+    
+    DB --> INGEST
+    API --> INGEST
+    FILE --> INGEST
+    STREAM --> INGEST
+    
+    INGEST --> STORE
+    STORE --> PROCESS
+    
+    PROCESS --> DOMAIN1
+    PROCESS --> DOMAIN2
+    PROCESS --> DOMAIN3
+    
+    PLATFORM -.-> DOMAIN1
+    PLATFORM -.-> DOMAIN2
+    PLATFORM -.-> DOMAIN3
+    
+    DOMAIN1 --> BI
+    DOMAIN2 --> ML
+    DOMAIN3 --> APP
+    PROCESS --> DASH
+    
+    style INGEST fill:#e1f5fe
+    style STORE fill:#e8f5e8
+    style PROCESS fill:#fff3e0
+    style PLATFORM fill:#f3e5f5
+```
+
+#### **Decision Framework Visualization**
+
+**Principle-Based Architecture Decision Process:**
+
+```mermaid
+flowchart TD
+    START[Architecture Decision Needed] --> BIZ[1. Business Value Analysis
+    - What problem are we solving?
+    - What's the business impact?
+    - How do we measure success?]
+    
+    BIZ --> SIMPLE[2. Simplicity Assessment
+    - What's the simplest solution?
+    - Can we avoid new technology?
+    - What's the minimum complexity?]
+    
+    SIMPLE --> QA[3. Quality Attributes
+    - Performance requirements?
+    - Scalability needs?
+    - Security implications?
+    - Reliability expectations?]
+    
+    QA --> TRADE[4. Trade-off Analysis
+    - What are the alternatives?
+    - What do we gain/lose?
+    - What are we optimizing for?]
+    
+    TRADE --> EVOLVE[5. Evolution Planning
+    - How will this change?
+    - What's our migration path?
+    - How do we version changes?]
+    
+    EVOLVE --> DECISION[Architecture Decision]
+    DECISION --> DOC[Document Decision
+    - Context & rationale
+    - Trade-offs made
+    - Success criteria]
+    
+    DOC --> REVIEW[Stakeholder Review
+    - Business alignment check
+    - Technical feasibility
+    - Risk assessment]
+    
+    REVIEW -->|Approved| IMPLEMENT[Implement Solution]
+    REVIEW -->|Changes Needed| SIMPLE
+    
+    style START fill:#ffcdd2
+    style BIZ fill:#c8e6c9
+    style SIMPLE fill:#c8e6c9
+    style QA fill:#c8e6c9
+    style TRADE fill:#c8e6c9
+    style EVOLVE fill:#c8e6c9
+    style DECISION fill:#e1f5fe
+```
+
+### **How to Use These Diagrams**
+
+#### **For Stakeholder Communication:**
+1. **Use C4 Level 1** for executive presentations - shows business context
+2. **Use TOGAF ADM diagram** to explain your architecture process
+3. **Use decision framework** to show your systematic approach
+
+#### **For Technical Teams:**
+1. **Use C4 Level 2-3** for development planning
+2. **Use pattern comparison diagrams** for technology selection
+3. **Use quality attributes matrix** for non-functional requirements
+
+#### **For Architecture Reviews:**
+1. **Use evolution diagrams** to show migration paths
+2. **Use trade-off visualizations** to explain decisions
+3. **Use principle-based process** to validate approach
+
+#### **For Documentation:**
+1. **Include relevant pattern diagrams** in architecture documents
+2. **Use decision trees** to explain selection criteria
+3. **Reference quality attribute matrices** for requirements traceability
+
+These visual representations make complex architecture concepts accessible to different audiences and support the principle-based approach to solution architecture outlined in the book.
+
+---
+
+## **Resources Section**
+
+### **Core Architecture Pattern Libraries**
+
+#### **1. Martin Fowler's Enterprise Application Architecture Patterns**
+- **URL:** https://martinfowler.com/eaaCatalog/
+- **Description:** A catalog of patterns to better understand, communicate, and teach the architecture of enterprise applications
+- **Why It's Essential:** Foundational patterns for data access, web presentation, distribution, and offline concurrency
+- **How to Use:** Reference for understanding the "why" behind common enterprise patterns
+
+#### **2. Enterprise Integration Patterns**
+- **URL:** https://www.enterpriseintegrationpatterns.com
+- **Description:** A comprehensive pattern language for the robust design of asynchronous messaging solutions. The patterns stay product neutral and emphasize design trade-offs over specific technology choices
+- **Why It's Essential:** Definitive guide for integration architecture decisions
+- **How to Use:** Apply when designing system-to-system communication and messaging architectures
+
+#### **3. Martin Fowler's Enterprise Patterns Article**
+- **URL:** https://martinfowler.com/articles/enterprisePatterns.html
+- **Description:** Long-form article explaining patterns in enterprise software
+- **Why It's Essential:** Deeper context on when and why to use enterprise patterns
+- **How to Use:** Read for principle-based understanding of pattern selection
+
+### **Enterprise Architecture Frameworks**
+
+#### **4. TOGAF (The Open Group Architecture Framework)**
+- **Official Documentation:** https://www.opengroup.org/togaf
+- **Key Resource:** ADM (Architecture Development Method) and framework mappings
+- **Why It's Essential:** TOGAF focuses on business and IT alignment, emphasising delivering business value through IT
+- **How to Use:** Apply ADM phases for structured architecture development
+- **Principle Connection:** Aligns directly with "Business Value First" principle
+
+#### **5. Zachman Framework**
+- **Official Site:** https://zachman-feac.com/
+- **Key Resource:** Principles include comprehensive classification and organization, providing a holistic view, ensuring business-IT alignment
+- **Why It's Essential:** Matrix structure to analyze and document the different aspects of a solution. Each cell represents a specific viewpoint, such as business objectives, system specifications, or technology infrastructure
+- **How to Use:** Use the 6x6 matrix for comprehensive solution documentation
+- **Principle Connection:** Supports "Quality Attributes Drive Design" through systematic viewpoint analysis
+
+#### **6. Comparison of Enterprise Architecture Frameworks**
+- **URL:** https://www.bcs.org/articles-opinion-and-research/a-comparison-of-the-top-four-enterprise-architecture-frameworks/
+- **Additional Resource:** https://www.leanix.net/en/blog/5-enterprise-architecture-frameworks
+- **Why It's Essential:** Helps choose the right framework for your context
+- **How to Use:** Reference when selecting architectural methodology
+- **Principle Connection:** Supports "Trade-offs Are Inevitable" by showing framework comparisons
+
+### **Cloud Architecture and Modern Patterns**
+
+#### **7. AWS Well-Architected Framework**
+- **URL:** https://aws.amazon.com/architecture/well-architected/
+- **Key Pillars:** Operational Excellence, Security, Reliability, Performance Efficiency, Cost Optimization, Sustainability
+- **Why It's Essential:** Modern cloud-native architecture principles
+- **How to Use:** Apply pillars as quality attributes in cloud solution design
+- **Principle Connection:** Direct implementation of "Quality Attributes Drive Design"
+
+#### **8. Microsoft Azure Architecture Center**
+- **URL:** https://docs.microsoft.com/en-us/azure/architecture/
+- **Key Resources:** Reference architectures, design patterns, best practices
+- **Why It's Essential:** Cloud-specific patterns and anti-patterns
+- **How to Use:** Reference for cloud migration and modernization patterns
+- **Principle Connection:** Supports "Evolution Over Revolution" with migration patterns
+
+#### **9. Google Cloud Architecture Framework**
+- **URL:** https://cloud.google.com/architecture/framework
+- **Key Areas:** System design, operational excellence, security privacy compliance, reliability
+- **Why It's Essential:** Google's approach to cloud architecture principles
+- **How to Use:** Reference for distributed systems and scalability patterns
+- **Principle Connection:** Aligns with "Simplicity Over Complexity" philosophy
+
+### **Microservices and Distributed Systems**
+
+#### **10. Microservices.io**
+- **URL:** https://microservices.io/
+- **Creator:** Chris Richardson
+- **Why It's Essential:** Comprehensive microservices pattern library
+- **How to Use:** Reference for service decomposition and distributed system patterns
+- **Principle Connection:** Supports all five principles through pattern trade-off analysis
+
+#### **11. Building Microservices Patterns**
+- **Resource:** Sam Newman's microservices patterns documentation
+- **Why It's Essential:** Practical guidance on microservices implementation
+- **How to Use:** Apply when decomposing monolithic systems
+- **Principle Connection:** "Evolution Over Revolution" through incremental decomposition
+
+### **DevOps and Operational Patterns**
+
+#### **12. The Twelve-Factor App**
+- **URL:** https://12factor.net/
+- **Why It's Essential:** Principles for building software-as-a-service applications
+- **How to Use:** Apply as design principles for cloud-native applications
+- **Principle Connection:** Direct implementation of "Evolution Over Revolution"
+
+#### **13. Site Reliability Engineering (SRE) Principles**
+- **URL:** https://sre.google/
+- **Key Resource:** Google's SRE books and practices
+- **Why It's Essential:** Operational aspects of system reliability
+- **How to Use:** Apply for system reliability and operational excellence
+- **Principle Connection:** Supports "Quality Attributes Drive Design" for reliability
+
+### **Security Architecture**
+
+#### **14. OWASP Application Security Architecture**
+- **URL:** https://owasp.org/www-project-integration-standards/
+- **Why It's Essential:** Security patterns and anti-patterns
+- **How to Use:** Reference for security architecture decisions
+- **Principle Connection:** Critical component of "Quality Attributes Drive Design"
+
+#### **15. NIST Cybersecurity Framework**
+- **URL:** https://www.nist.gov/cyberframework
+- **Why It's Essential:** Structured approach to cybersecurity
+- **How to Use:** Framework for security architecture planning
+- **Principle Connection:** Supports systematic security thinking
+
+### **Industry-Specific Patterns**
+
+#### **16. FinTech Architecture Patterns**
+- **Resource:** Financial services architecture repositories
+- **Why It's Essential:** Industry-specific compliance and patterns
+- **How to Use:** Reference for financial services solution architecture
+- **Principle Connection:** Context-specific application of all principles
+
+#### **17. Healthcare Architecture Standards**
+- **Resource:** HL7 FHIR and healthcare interoperability standards
+- **URL:** https://hl7.org/fhir/
+- **Why It's Essential:** Healthcare-specific integration patterns
+- **How to Use:** Apply for healthcare system integration
+- **Principle Connection:** Industry application of integration principles
+
+### **Learning and Community Resources**
+
+#### **18. Enterprise Architecture Guilds and Communities**
+- **The Open Group:** https://www.opengroup.org/
+- **Enterprise Architecture Professional:** Various professional associations
+- **Why It's Essential:** Peer learning and best practices sharing
+- **How to Use:** Engage for continuous learning and networking
+
+#### **19. Architecture Decision Records (ADR)**
+- **Template Repository:** https://adr.github.io/
+- **Why It's Essential:** Document architecture decisions systematically
+- **How to Use:** Implement ADR practice for decision tracking
+- **Principle Connection:** Critical for "Trade-offs Are Inevitable" documentation
+
+#### **20. C4 Model for Software Architecture**
+- **URL:** https://c4model.com/
+- **Why It's Essential:** Simple approach to software architecture diagramming
+- **How to Use:** Standardize architecture communication
+- **Principle Connection:** Supports clear stakeholder communication
+
+### **How to Use These Resources in Your Practice**
+
+#### **Daily Reference:**
+1. **Martin Fowler's Catalogs:** For pattern selection and understanding
+2. **Cloud Provider Frameworks:** For quality attribute requirements
+3. **ADR Templates:** For documenting decisions
+
+#### **Weekly Learning:**
+1. **Framework Documentation:** Deep dive into TOGAF or Zachman concepts
+2. **Industry Resources:** Stay updated on domain-specific patterns
+3. **Community Discussions:** Engage with architecture communities
+
+#### **Monthly Review:**
+1. **Pattern Libraries:** Review new patterns and updates
+2. **Framework Updates:** Check for new versions and guidance
+3. **Principle Application:** Assess how well you're applying the five principles
+
+#### **Project-Specific:**
+1. **Architecture Frameworks:** Choose appropriate methodology
+2. **Pattern Libraries:** Select patterns based on quality attributes
+3. **Industry Standards:** Apply domain-specific requirements
+
+These resources provide the documented foundation for the principles and practices outlined in the book, giving you authoritative sources to reference and learn from as you develop your solution architecture expertise.
     A["Level 1: System Context
     🌐 Big Picture View
     Shows how your system fits in the world
@@ -928,10 +1462,3 @@ mindmap
       Domain-Driven Design
       CQRS Pattern
 ```
-
-#### **Quality Attributes Decision Matrix**
-
-**Pattern Selection Based on Quality Attributes:**
-
-```mermaid
-graph TD
